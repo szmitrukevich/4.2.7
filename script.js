@@ -1,6 +1,6 @@
 const reposList = document.querySelector('.repos__list')
 const searchLine = document.querySelector('.search__line')
-const autocompleteList = document.querySelector('.search__autocomplete')
+const autocompleteList = document.querySelector('.search__autocomplete-list')
 
 
 async function getRepos (searchValue) {
@@ -19,53 +19,48 @@ const debounce = (fn, debounceTime) => {
     }
 };
 
-const searchStart = (e) => {
+const searchStart = () => {
     if (searchLine.value) {
     getRepos(searchLine.value)
-    } else {
-        return
     }
 }
 
 searchLine.addEventListener('keypress', debounce(searchStart, 300));
 
+autocompleteList.addEventListener('click', (e) => {
+    if (e.target.tagName != 'LI') return
+    addToReposList(e.target)
+    autocompleteList.innerHTML = ''
+    searchLine.value = ''
+})
+
+const addAutocompleteList = (searchResult) => {
+    autocompleteList.innerHTML = ''
+    for (let item of searchResult.items) {
+        createNewAutocompleteItem(item)
+    }
+}
 
 const createNewAutocompleteItem = (item) => {
     const newItem = document.createElement('li')
     newItem.textContent = item.name
     newItem.dataset.owner = item.owner.login
     newItem.dataset.stars = item.stargazers_count
-    newItem.setAttribute('onclick', 'addToReposList(this)')
     autocompleteList.appendChild(newItem)
 }
-
-const addAutocompleteList = (searchResult) => {
-    autocompleteList.innerHTML = ''
-    autocompleteList.style.display = 'block'
-    for (let item of searchResult.items) {
-        createNewAutocompleteItem(item)
-    }
-}
-
-
 
 
 const addToReposList = (item) => {
     const newItem = document.createElement('li');
         
         newItem.innerHTML = `<span>Name: ${item.textContent}</span>
-                             <span>Owner: ${item.dataset.owner}</span>
-                             <span>Stars: ${item.dataset.stars}</span>
-                             <button class = 'btn'></btn>`;
+                            <span>Owner: ${item.dataset.owner}</span>
+                            <span>Stars: ${item.dataset.stars}</span>
+                            <button class = 'btn'></btn>`;
         reposList.appendChild(newItem);
 }
 
-autocompleteList.addEventListener('click', (e) => {
-    if (e.target.tagName = 'li') {
-        autocompleteList.innerHTML = ''
-        searchLine.value = ''
-    }
-})
+
 
 reposList.addEventListener('click', (e) => {
     if (e.target.className != 'btn') return;
