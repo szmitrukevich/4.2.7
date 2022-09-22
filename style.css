@@ -7,6 +7,8 @@ body {
     width: 661px;
 }
 
+
+
 .search {
     width: 500px;
     margin: 0px auto;
@@ -26,17 +28,17 @@ body {
     box-sizing: border-box;
 }
 
-.search__autocomplete, .repos__list {
+.search__autocomplete-list, .repos__list {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.search__autocomplete {
+.search__autocomplete-list {
     height: 220px;
 }
 
-.search__autocomplete li {
+.search__autocomplete-list li {
     background-color: #E3E3E3;
     height: 44px;
     font-weight: 400;
@@ -48,10 +50,10 @@ body {
     box-sizing: border-box;
 }
 
-.search__autocomplete li:hover {
+.search__autocomplete-list li:hover {
     background-color: #65CDF9;
 }
-.search__autocomplete li:active {
+.search__autocomplete-list li:active {
     background-color: #65CDF9;
 }
 
